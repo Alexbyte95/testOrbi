@@ -1,0 +1,70 @@
+version: '3.7'
+
+services:
+  service-a:
+    build:
+      context: ./service-a
+    container_name: service-a
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/test  
+    depends_on:
+      - rabbitmq
+      - mongo
+    networks:
+      - backend
+
+  service-b:
+    build:
+      context: ./service-b
+    container_name: service-b
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/test  
+    depends_on:
+      - rabbitmq
+      - mongo
+    networks:
+      - backend
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Consola de gestión
+    networks:
+      - backend
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  mongo:
+    image: "mongo:latest"
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=test  
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.runCommand('ping').ok == 1"]
+      interval: 30s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
+
+volumes:
+  mongo-data:
+    driver: local
+
+networks:
+  backend:
+    driver: bridge
