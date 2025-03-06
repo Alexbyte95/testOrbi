@@ -1,0 +1,6 @@
+[submodule "service-a"]
+	path = service-a
+	url = https://github.com/Alexbyte95/testUserService.git
+[submodule "service-b"]
+	path = service-b
+	url = https://github.com/Alexbyte95/testNotificationService
