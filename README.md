@@ -20,7 +20,8 @@ Asegúrate de tener instalado:
 - [Node.js 20+](https://nodejs.org/)
 - [npm](https://www.npmjs.com/) o [yarn](https://yarnpkg.com/)
 - [Docker](https://www.docker.com/) (opcional, para ejecución con contenedores)
-
+**RabbitMQ** (si ejecutas sin Docker, asegúrate de tener RabbitMQ corriendo localmente)
+**MongoDB** (si ejecutas sin Docker, asegúrate de tener MongoDB corriendo localmente)
 ---
 
 ## 🚀 Instalación y ejecución
